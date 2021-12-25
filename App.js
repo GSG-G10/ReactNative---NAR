@@ -5,24 +5,42 @@ import { Provider } from "react-redux";
 
 import { store } from "./src/redux/store";
 import Home from "./src/screens/Home";
+import Project from "./src/screens/Project";
+import Specifications from "./src/screens/Specifications";
 
 const Stack = createNativeStackNavigator();
+
 export default function App() {
   return (
     <Provider store={store}>
-      <SafeAreaView style={styles.container}>
-        <NavigationContainer>
-          <Stack.Navigator>
-            <Stack.Screen
-              name="Home"
-              component={Home}
-              options={{
-                headerShown: false,
-              }}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </SafeAreaView>
+    
+    <SafeAreaView style={styles.container}>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            name="Home"
+            component={Home}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="Project"
+            component={Project}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="Specifications"
+            component={Specifications}
+            options={{
+              headerShown: false,
+            }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </SafeAreaView>
     </Provider>
   );
 }

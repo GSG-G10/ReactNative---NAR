@@ -8,7 +8,6 @@ import { colRef } from "../../db/firebaseConfig";
 import { Text } from "../design/Text";
 import IconProgress from "../../components/icons/IconProgress";
 import { LoadingScreen } from "../design/Loading";
-import { store } from "../redux/store";
 import { setProjectsData } from "../redux/actionCreator";
 
 export default function Home({ navigation }) {
@@ -33,7 +32,11 @@ export default function Home({ navigation }) {
     onSnapshot(colRef, (snapshot) => {
       let updated = [];
       snapshot.docs.forEach((project) => {
-        updated.push({ ...project.data(), id: project.id });
+        updated.push({
+          ...project.data(),
+          id: project.id,
+          cost: getTotalPrice(project.data().specifications) || 0,
+        });
       });
       if (inputValue) {
         const filtered = updated.filter((project) =>
@@ -45,6 +48,7 @@ export default function Home({ navigation }) {
       } else {
         dispatch(setProjectsData(updated));
       }
+
       setIsLoading(false);
     });
   }, [inputValue]);
@@ -89,13 +93,8 @@ export default function Home({ navigation }) {
               >
                 <View style={styles.projectContent}>
                   <Text value={project.projectName} />
-                  {project?.specifications == undefined ? (
-                    <Text value="0 $" />
-                  ) : (
-                    <Text
-                      value={`${getTotalPrice(project?.specifications)} $`}
-                    />
-                  )}
+
+                  <Text value={`${project.cost} $`} />
                 </View>
                 <View style={styles.projectStatus}>
                   <IconProgress status={project.progress} />
