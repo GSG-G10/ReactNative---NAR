@@ -30,7 +30,7 @@ const colors = {
   "green": "#0f0",
 };
 
-export const Text = ({ color = "gery", onPress = () => {}, style = {}, typography = "p1", value = "ERROR" }) => {
+export const Text = ({ color = "grey", onPress = () => {}, style = {}, typography = "p1", value = "ERROR" }) => {
   const defaultStyles = {
     ...(typographies[typography]),
     color: colors[color],
