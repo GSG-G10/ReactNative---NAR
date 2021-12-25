@@ -2,16 +2,22 @@ import { useState, useEffect } from "react";
 import { StyleSheet, View, TextInput, TouchableOpacity } from "react-native";
 import { onSnapshot } from "firebase/firestore";
 import { EvilIcons } from "@expo/vector-icons";
+import { useDispatch, useSelector } from "react-redux";
+
 import { colRef } from "../../db/firebaseConfig";
 import { Text } from "../design/Text";
 import IconProgress from "../../components/icons/IconProgress";
 import { LoadingScreen } from "../design/Loading";
+import { store } from "../redux/store";
+import { setProjectsData } from "../redux/actionCreator";
 
 export default function Home({ navigation }) {
-  const [projects, setProjects] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [showInput, setShowInput] = useState(false);
   const [inputValue, setInputValue] = useState("");
+
+  const dispatch = useDispatch();
+  const projects = useSelector((state) => state.projectsData);
 
   const getTotalPrice = (arrOfSpecifications) => {
     const costs = arrOfSpecifications?.reduce((acc, curr) => {
@@ -35,9 +41,9 @@ export default function Home({ navigation }) {
             .toLowerCase()
             .startsWith(inputValue.toLowerCase().trim())
         );
-        setProjects(filtered);
+        dispatch(setProjectsData(filtered));
       } else {
-        setProjects(updated);
+        dispatch(setProjectsData(updated));
       }
       setIsLoading(false);
     });
