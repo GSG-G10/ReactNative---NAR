@@ -1,32 +1,29 @@
-import { StatusBar } from "expo-status-bar";
-import { Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { SafeAreaProvider } from "react-native-safe-area-context";
-
+import { Platform, SafeAreaView, StatusBar, StyleSheet } from "react-native";
+import Home from "./src/screens/Home";
 const Stack = createNativeStackNavigator();
-
-
 export default function App() {
   return (
-    <SafeAreaProvider>
-      <StatusBar style="auto" />
+    <SafeAreaView style={styles.container}>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="Home" component={<Text>Hi Home</Text>} />
-          <Stack.Screen name="Project" component={<Text>Hi Project</Text>} />
           <Stack.Screen
-            name="Specifications"
-            component={<Text>Hi Specifications</Text>}
+            name="Home"
+            component={Home}
+            options={{
+              headerShown: false,
+            }}
           />
-          <Stack.Screen
-            name="Add Specifications"
-            component={<Text>Hi Add Specifications</Text>}
-          />
-          <Stack.Screen name="Sign Up" component={<Text>Hi Sign Up</Text>} />
-          <Stack.Screen name="Sign In" component={<Text>Hi Sign In</Text>} />
         </Stack.Navigator>
       </NavigationContainer>
-    </SafeAreaProvider>
+    </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+  },
+});
