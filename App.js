@@ -1,6 +1,9 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Platform, SafeAreaView, StatusBar, StyleSheet } from "react-native";
+import { Provider } from "react-redux";
+
+import { store } from "./src/redux/store";
 import Home from "./src/screens/Home";
 import Project from "./src/screens/Project";
 import Specifications from "./src/screens/Specifications";
@@ -9,6 +12,8 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
+    <Provider store={store}>
+    
     <SafeAreaView style={styles.container}>
       <NavigationContainer>
         <Stack.Navigator>
@@ -36,6 +41,7 @@ export default function App() {
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaView>
+    </Provider>
   );
 }
 

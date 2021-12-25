@@ -5,35 +5,36 @@ import { Image } from "../design/Image";
 import { db } from "../../db/firebaseConfig";
 import { doc, getDoc } from "firebase/firestore";
 import { AntDesign } from "@expo/vector-icons";
-
-const getTotalPrice = (arrOfSpecifications) => {
-  const costs = arrOfSpecifications?.reduce((acc, curr) => {
-    acc += curr.cost;
-    return acc;
-  }, 0);
-  return costs;
-};
+import { useSelector } from "react-redux";
 
 const Project = ({ navigation, route }) => {
-  const [projectData, setProjectData] = useState({});
-  useEffect(() => {
-    const getProjectData = async () => {
-      const docRef = doc(db, "projects", route.params.projectId);
-      const docSnap = await getDoc(docRef);
-      setProjectData(docSnap.data());
-    };
+  const projects = useSelector((state) => state.projectsData);
 
-    getProjectData();
+  const [projectData, setProjectData] = useState({});
+
+  useEffect(() => {
+    const getProjectById = projects?.filter(
+      (project) => project.id === route.params.projectId
+    );
+    setProjectData(getProjectById[0]);
   }, []);
 
   return (
     <>
       {projectData?.projectName ? (
         <View style={styles.container}>
-          <Text style={styles.title} typography="h1" value={`${projectData.projectName} Project`} />
+          <Text
+            style={styles.title}
+            typography="h1"
+            value={`${projectData.projectName} Project`}
+          />
           <View style={styles.detailsContainer}>
-            <Text style={{color: 'orange'}} typography="p2" value={projectData.progress.toUpperCase()} />
-            <Text value={`${getTotalPrice(projectData.specifications)} $`} />
+            <Text
+              style={{ color: "orange" }}
+              typography="p2"
+              value={projectData.progress.toUpperCase() || "estimate sent".toUpperCase()}
+            />
+            <Text value={`${projectData.cost} $`} />
           </View>
           <Image uri={projectData.image} />
           <View style={styles.lists}>
@@ -70,21 +71,21 @@ const Project = ({ navigation, route }) => {
 export default Project;
 
 const styles = StyleSheet.create({
-  container:{
+  container: {
     flex: 1,
-    alignItems: 'center'
+    alignItems: "center",
   },
-  title:{
-    width: '80%',
-    paddingTop: 30
+  title: {
+    width: "85%",
+    paddingTop: 30,
   },
-  lists:{
-    width: '85%',
+  lists: {
+    width: "85%",
     marginVertical: 15,
-
   },
   listContainer: {
     display: "flex",
+    width: "100%",
     flexDirection: "row",
     marginHorizontal: "auto",
     borderBottomColor: "grey",
@@ -103,5 +104,4 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     justifyContent: "space-between",
   },
-
 });

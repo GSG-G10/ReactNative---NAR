@@ -2,16 +2,21 @@ import { useState, useEffect } from "react";
 import { StyleSheet, View, TextInput, TouchableOpacity } from "react-native";
 import { onSnapshot } from "firebase/firestore";
 import { EvilIcons } from "@expo/vector-icons";
+import { useDispatch, useSelector } from "react-redux";
+
 import { colRef } from "../../db/firebaseConfig";
 import { Text } from "../design/Text";
 import IconProgress from "../../components/icons/IconProgress";
 import { LoadingScreen } from "../design/Loading";
+import { setProjectsData } from "../redux/actionCreator";
 
 export default function Home({ navigation }) {
-  const [projects, setProjects] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [showInput, setShowInput] = useState(false);
   const [inputValue, setInputValue] = useState("");
+
+  const dispatch = useDispatch();
+  const projects = useSelector((state) => state.projectsData);
 
   const getTotalPrice = (arrOfSpecifications) => {
     const costs = arrOfSpecifications?.reduce((acc, curr) => {
@@ -27,7 +32,11 @@ export default function Home({ navigation }) {
     onSnapshot(colRef, (snapshot) => {
       let updated = [];
       snapshot.docs.forEach((project) => {
-        updated.push({ ...project.data(), id: project.id });
+        updated.push({
+          ...project.data(),
+          id: project.id,
+          cost: getTotalPrice(project.data().specifications) || 0,
+        });
       });
       if (inputValue) {
         const filtered = updated.filter((project) =>
@@ -35,10 +44,11 @@ export default function Home({ navigation }) {
             .toLowerCase()
             .startsWith(inputValue.toLowerCase().trim())
         );
-        setProjects(filtered);
+        dispatch(setProjectsData(filtered));
       } else {
-        setProjects(updated);
+        dispatch(setProjectsData(updated));
       }
+
       setIsLoading(false);
     });
   }, [inputValue]);
@@ -83,13 +93,8 @@ export default function Home({ navigation }) {
               >
                 <View style={styles.projectContent}>
                   <Text value={project.projectName} />
-                  {project?.specifications == undefined ? (
-                    <Text value="0 $" />
-                  ) : (
-                    <Text
-                      value={`${getTotalPrice(project?.specifications)} $`}
-                    />
-                  )}
+
+                  <Text value={`${project.cost} $`} />
                 </View>
                 <View style={styles.projectStatus}>
                   <IconProgress status={project.progress} />
