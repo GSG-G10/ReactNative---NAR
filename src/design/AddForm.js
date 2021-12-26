@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     width: "25%",
   },
   focusedInput: {
-    borderColor: '#3796f3',
-    borderWidth: 1
-  }
+    borderColor: "#3796f3",
+    borderWidth: 1,
+  },
 });

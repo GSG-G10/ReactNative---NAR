@@ -32,17 +32,13 @@ export default function App() {
                   headerShown: false,
                 }}
               />
-              <Stack.Screen
-                name="Specifications"
-                component={Specifications}
-                options={{
-                  headerShown: false,
-                }}
-              />
+              <Stack.Screen name="Specifications" component={Specifications} />
               <Stack.Screen
                 name="AddSpecifications"
                 component={AddSpecifications}
-                options={({ route }) => ({ title: `${route.params.projectName} Estimate` })}
+                options={({ route }) => ({
+                  title: `${route.params.projectName} Estimate`,
+                })}
               />
             </Stack.Group>
           </Stack.Navigator>

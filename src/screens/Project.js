@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { Text } from "../design/Text";
 import { Image } from "../design/Image";
-import { db } from "../../db/firebaseConfig";
-import { doc, getDoc } from "firebase/firestore";
 import { AntDesign } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
 
@@ -32,7 +30,10 @@ const Project = ({ navigation, route }) => {
             <Text
               style={{ color: "orange" }}
               typography="p2"
-              value={projectData.progress.toUpperCase() || "estimate sent".toUpperCase()}
+              value={
+                projectData.progress.toUpperCase() ||
+                "estimate sent".toUpperCase()
+              }
             />
             <Text value={`${projectData.cost} $`} />
           </View>
@@ -43,7 +44,7 @@ const Project = ({ navigation, route }) => {
               onPress={() =>
                 navigation.navigate("Specifications", {
                   projectId: route.params.projectId,
-                  projectName: projectData.projectName
+                  projectName: projectData.projectName,
                 })
               }
             >
