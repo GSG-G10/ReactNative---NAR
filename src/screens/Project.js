@@ -43,6 +43,7 @@ const Project = ({ navigation, route }) => {
               onPress={() =>
                 navigation.navigate("Specifications", {
                   projectId: route.params.projectId,
+                  projectName: projectData.projectName
                 })
               }
             >
