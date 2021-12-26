@@ -3,7 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Provider } from "react-redux";
 import { store } from "./src/redux/store";
-import { HomeNavigator, MessagesNavigator } from "./Navigation";
+import { HomeNavigator, LoginNavigator, MessagesNavigator } from "./components/Navigation";
 
 const Tab = createBottomTabNavigator();
 
@@ -69,7 +69,7 @@ export default function App() {
                   );
                 },
               }}
-              component={MessagesNavigator}
+              component={LoginNavigator}
             />
           </Tab.Navigator>
         </NavigationContainer>

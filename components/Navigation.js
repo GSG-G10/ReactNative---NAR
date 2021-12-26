@@ -1,15 +1,15 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Home from "./src/screens/Home";
-import Specifications from "./src/screens/Specifications";
-import Project from "./src/screens/Project";
-import AddSpecifications from "./src/screens/AddSpecifications";
-import { Text } from "./src/design/Text";
-
+import Home from "../src/screens/Home";
+import Login from "../src/screens/Login"
+import Specifications from "../src/screens/Specifications";
+import Project from "../src/screens/Project";
+import AddSpecifications from "../src/screens/AddSpecifications";
+import { Text } from "../src/design/Text";
 const Stack = createNativeStackNavigator();
 
 const Messages = () => <Text />;
 
-const HomeNavigator = () => {
+export const HomeNavigator = () => {
   return (
     <Stack.Navigator>
       <Stack.Group>
@@ -40,9 +40,8 @@ const HomeNavigator = () => {
   );
 };
 
-export { HomeNavigator };
 
-const MessagesNavigator = () => {
+export const MessagesNavigator = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Messages" component={Messages} />
@@ -50,4 +49,11 @@ const MessagesNavigator = () => {
   );
 };
 
-export { MessagesNavigator };
+
+export const LoginNavigator = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Login" component={Login} />
+    </Stack.Navigator>
+  );
+};
