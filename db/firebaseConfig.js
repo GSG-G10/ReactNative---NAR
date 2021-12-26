@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
+import { getAuth ,createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBu_pIDJKcnM-lbJYCTmgiQMsnQLoPH6hI",
@@ -18,4 +18,26 @@ const db = getFirestore(app);
 const colRef = collection(db, "projects");
 const auth = getAuth();
 
-export {db, colRef}
+const signUp = async (email, password) => {
+  try {
+    const cred = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    return cred.user.accessToken
+  } catch (err) {
+    return "error"
+  }
+};
+
+const signInuser = async (email, password) => {
+  try{
+   const cred = await signInWithEmailAndPassword(auth, email, password)
+   return cred.user.accessToken
+  } catch(err) {
+    return "error"
+  }
+ }
+
+export {db, colRef, signUp, signInuser}

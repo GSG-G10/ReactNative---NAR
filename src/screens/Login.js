@@ -1,16 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { View, StyleSheet, Platform, TextInput, Button } from "react-native";
-import { useSelector } from "react-redux";
-import { Entypo } from "@expo/vector-icons";
+import { useSelector, useDispatch } from "react-redux";
 
-import { LoadingScreen } from "../design/Loading";
 import { Text } from "../design/Text";
+import { signUp, signInuser } from "../../db/firebaseConfig";
+import { loginToken, signupToken } from "../redux/actionCreator";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const dispatch = useDispatch();
 
-  useEffect(() => {});
+  const handleSubmit = async(email, password, cb, cbDispatch) => {
+    const accessToken = await cb(email, password);
+    if(accessToken === "error") {
+        setError("Something Wrong")
+    } else {
+        return dispatch(cbDispatch(accessToken));
+    }
+  };
 
   return (
     <View style={styles.form}>
@@ -33,12 +42,21 @@ const Login = () => {
 
       <View style={styles.buttonsContainer}>
         <View style={styles.loginContainer}>
-          <Button title="Log In" color="#06bcee" />
+          <Button
+            title="Log In"
+            color="#06bcee"
+            onPress={() => {
+                handleSubmit(email, password, signInuser, loginToken);
+            }}
+          />
         </View>
         <View style={styles.signUpContainer}>
           <Button
             title="Sign Up"
             color={Platform.OS === "android" ? "#06bcee" : "#fff"}
+            onPress={() => {
+                handleSubmit(email, password, signUp, signupToken);
+            }}
           />
         </View>
       </View>
