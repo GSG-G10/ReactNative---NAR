@@ -28,6 +28,7 @@ const Specifications = ({ navigation, route }) => {
         onPress={() =>
           navigation.navigate("AddSpecifications", {
             projectId: route.params.projectId,
+            projectName: projects?.filter((project) => project.id === route.params.projectId)[0].projectName,
           })
         }
       >
