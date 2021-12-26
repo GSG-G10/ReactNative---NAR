@@ -34,9 +34,6 @@ export default function App() {
           <Stack.Screen
             name="Specifications"
             component={Specifications}
-            options={{
-              headerShown: false,
-            }}
           />
         </Stack.Navigator>
       </NavigationContainer>

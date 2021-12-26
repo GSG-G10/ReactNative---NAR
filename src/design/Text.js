@@ -8,7 +8,7 @@ const typographies = {
   }, 
   h2: {
     fontSize: 16,
-    fontWeight: "300",
+    fontWeight: "bold",
     lineHeight: 28,
   }, 
   p1: {

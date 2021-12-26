@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { Text } from "../design/Text";
 import { Image } from "../design/Image";
-import { db } from "../../db/firebaseConfig";
-import { doc, getDoc } from "firebase/firestore";
 import { AntDesign } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
 
