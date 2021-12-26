@@ -30,7 +30,10 @@ const Project = ({ navigation, route }) => {
             <Text
               style={{ color: "orange" }}
               typography="p2"
-              value={projectData.progress.toUpperCase() || "estimate sent".toUpperCase()}
+              value={
+                projectData.progress.toUpperCase() ||
+                "estimate sent".toUpperCase()
+              }
             />
             <Text value={`${projectData.cost} $`} />
           </View>
@@ -41,6 +44,7 @@ const Project = ({ navigation, route }) => {
               onPress={() =>
                 navigation.navigate("Specifications", {
                   projectId: route.params.projectId,
+                  projectName: projectData.projectName,
                 })
               }
             >

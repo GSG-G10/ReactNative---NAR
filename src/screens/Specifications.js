@@ -26,7 +26,7 @@ const Specifications = ({ navigation, route }) => {
       <TouchableOpacity
         style={styles.addSpecification}
         onPress={() =>
-          navigation.navigate("Add Specifications", {
+          navigation.navigate("AddSpecifications", {
             projectId: route.params.projectId,
           })
         }
