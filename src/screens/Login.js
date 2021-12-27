@@ -1,25 +1,31 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { View, StyleSheet, Platform, TextInput, Button } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
+import {  useDispatch } from "react-redux";
 
 import { Text } from "../design/Text";
 import { signUp, signInuser } from "../../db/firebaseConfig";
 import { loginToken, signupToken } from "../redux/actionCreator";
 
-const Login = () => {
+const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const dispatch = useDispatch();
 
-  const handleSubmit = async(email, password, cb, cbDispatch) => {
-    const accessToken = await cb(email, password);
-    if(accessToken === "error") {
-        setError("Something Wrong")
-    } else {
-        return dispatch(cbDispatch(accessToken));
-    }
-  };
+
+    const handleSubmit = async (email, password, cb) => {
+      if (!email || !password) {
+        setError("all fields required");
+        return;
+      }
+      try {
+        await cb(email, password);
+        return navigation.navigate('Home');
+  
+      } catch (err) {
+        setError(err.message.split("/")[1].split(")")[0]);
+      }
+    };
 
   return (
     <View style={styles.form}>
@@ -39,14 +45,13 @@ const Login = () => {
           value={password}
         />
       </View>
-
       <View style={styles.buttonsContainer}>
         <View style={styles.loginContainer}>
           <Button
             title="Log In"
             color="#06bcee"
             onPress={() => {
-                handleSubmit(email, password, signInuser, loginToken);
+              handleSubmit(email, password, signInuser);
             }}
           />
         </View>
@@ -55,11 +60,12 @@ const Login = () => {
             title="Sign Up"
             color={Platform.OS === "android" ? "#06bcee" : "#fff"}
             onPress={() => {
-                handleSubmit(email, password, signUp, signupToken);
+              handleSubmit(email, password, signUp);
             }}
           />
         </View>
       </View>
+      {error ? <Text style={styles.error} value={error} /> : null}
     </View>
   );
 };
@@ -106,6 +112,11 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     borderWidth: 2,
     borderColor: Platform.OS === "android" ? "#f1f1f1" : "#06bcee",
+  },
+  error: {
+    textAlign: "center",
+    color: "red",
+    marginVertical: 5,
   },
 });
 

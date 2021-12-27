@@ -7,7 +7,3 @@ export const setProjectsData = (projects) => {
 export const loginToken = (accessToken) => {
   return { type: actionTypes.LOGIN, payload: accessToken };
 }
-
-export const signupToken = (accessToken) => {
-  return { type: actionTypes.SIGNUP, payload: accessToken };
-}
