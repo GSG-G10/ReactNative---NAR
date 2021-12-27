@@ -9,6 +9,7 @@ import { Text } from "../design/Text";
 const Specifications = ({ navigation, route }) => {
   const [specifications, setSpecifications] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const token = useSelector((state) => state.setAccessToken)
 
   const projects = useSelector((state) => state.projectsData);
 
@@ -19,11 +20,11 @@ const Specifications = ({ navigation, route }) => {
     );
     setSpecifications(getProjectById[0].specifications);
     setIsLoading(false);
-  }, []);
+  }, [projects]);
 
   return (
     <View style={styles.specificationsScreen}>
-      <TouchableOpacity
+     {token && <TouchableOpacity
         style={styles.addSpecification}
         onPress={() =>
           navigation.navigate("AddSpecifications", {
@@ -32,8 +33,8 @@ const Specifications = ({ navigation, route }) => {
           })
         }
       >
-        <Entypo name="add-to-list" size={32} color="black" />
-      </TouchableOpacity>
+      <Entypo name="add-to-list" size={32} color="black" />
+      </TouchableOpacity>}
       <View style={styles.specificationsContainer}>
         {isLoading ? (
           <LoadingScreen />

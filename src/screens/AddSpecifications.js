@@ -25,7 +25,6 @@ const AddSpecifications = ({ navigation, route }) => {
   });
 
   const onPress = () => {
-    console.log(2);
     const docRef = doc(db, "projects", route.params.projectId);
     const specificationsArray = projects.filter(
       (project) => project.id === route.params.projectId
@@ -79,7 +78,7 @@ const AddSpecifications = ({ navigation, route }) => {
         setSpecificationData2,
         setSpecificationData3,
       ].forEach((setDdata) => setDdata({}));
-      setTimeout(() => navigation.goBack(), 2000);
+      setTimeout(() => navigation.navigate('Specifications'), 2000);
     }
   };
 

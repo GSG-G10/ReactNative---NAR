@@ -127,7 +127,6 @@ const styles = StyleSheet.create({
   },
   iconSearch: {
     fontSize: 30,
-    padding: 15,
     color: "rgb(80, 80, 80)",
   },
   projectsContainer: {
