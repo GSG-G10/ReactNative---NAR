@@ -1,10 +1,4 @@
-import {
-  Platform,
-  SafeAreaView,
-  StatusBar,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
+import { Platform, SafeAreaView, StatusBar, StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Provider, useDispatch, useSelector } from "react-redux";
@@ -66,7 +60,7 @@ function ChildApp() {
                 return (
                   <Entypo
                     name="home"
-                    size={24}
+                    size={22}
                     color={tabInfo.focused ? "#3796f3" : "#8e8e93"}
                   />
                 );
@@ -74,7 +68,6 @@ function ChildApp() {
             }}
             component={HomeNavigator}
           />
-
           {token ? (
             <>
               <Tab.Screen
@@ -85,7 +78,7 @@ function ChildApp() {
                     return (
                       <Entypo
                         name="chat"
-                        size={24}
+                        size={22}
                         color={tabInfo.focused ? "#3796f3" : "#8e8e93"}
                       />
                     );
@@ -102,7 +95,7 @@ function ChildApp() {
                       <AntDesign
                         onPress={() => logoutUser()}
                         name="logout"
-                        size={24}
+                        size={22}
                         color={tabInfo.focused ? "#3796f3" : "#8e8e93"}
                       />
                     );

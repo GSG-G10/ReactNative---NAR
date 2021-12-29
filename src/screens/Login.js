@@ -41,6 +41,7 @@ const Login = ({ navigation }) => {
         <Text style={styles.inputLabel} value="Password" />
         <TextInput
           style={styles.inputText}
+          secureTextEntry={true}
           onChangeText={(e) => setPassword(e)}
           value={password}
         />
