@@ -39,8 +39,6 @@ const AddSpecifications = ({ navigation, route }) => {
       (!specificationData3.description || specificationData3.cost === "")
     ) {
       setError("Add Specifications");
-      console.log(3);
-      console.log(specificationData1.cost);
     } else if (
       !(specificationData1.cost >= 0) ||
       !(specificationData1.cost >= 0) ||
