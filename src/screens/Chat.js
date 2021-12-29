@@ -1,10 +1,12 @@
 import { useEffect, useState, useRef } from "react";
-import { View, StyleSheet, Pressable, ScrollView, TextInput } from "react-native";
 import {
-  collection,
-  onSnapshot,
-  addDoc,
-} from "firebase/firestore";
+  View,
+  StyleSheet,
+  Pressable,
+  ScrollView,
+  TextInput,
+} from "react-native";
+import { collection, onSnapshot, addDoc } from "firebase/firestore";
 import { db } from "../../db/firebaseConfig";
 import { useSelector } from "react-redux";
 import { Text } from "../design/Text";
@@ -27,15 +29,15 @@ const MeMessages = ({ time, message, id }) => (
   </View>
 );
 
-const Chat = () => {
+const Chat = ({ route }) => {
   const sendBy = useSelector((state) => state.setAccessToken);
-  const receivedBy = "r1@gmail.com";
+
+  const { receivedBy, receivedImg } = route.params;
   const scrollViewRef = useRef();
   const messagesRef = collection(db, "messages");
 
   const [messages, setMessages] = useState([]);
   const [sendMessages, setSendMessages] = useState("");
-
 
   useEffect(() => {
     onSnapshot(messagesRef, (snapshot) => {
@@ -44,10 +46,9 @@ const Chat = () => {
         .filter(({ type }) => type === "added")
         .filter(
           ({ doc }) =>
-            doc.data().receivedBy == receivedBy ||
-            doc.data().sendBy == receivedBy ||
-            doc.data().receivedBy == sendBy ||
-            doc.data().sendBy == sendBy
+            (doc.data().receivedBy == receivedBy ||
+              doc.data().receivedBy == sendBy) &&
+            (doc.data().sendBy == receivedBy || doc.data().sendBy == sendBy)
         )
         .map(({ doc }) => {
           const message = doc.data();
@@ -94,6 +95,7 @@ const Chat = () => {
                     id={item._createdAt?.getTime()}
                     time={`${item.createdAt?.getFullYear()}-${item.createdAt?.getMonth()}-${item.createdAt?.getDate()}`}
                     message={item.text}
+                    imgUrl={receivedImg}
                   />
                 );
               }

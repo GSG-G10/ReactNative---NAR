@@ -7,7 +7,7 @@ import {
   HomeNavigator,
   LoginNavigator,
   MessagesNavigator,
-} from "./components/Navigation";
+} from "./Navigation";
 import { AntDesign } from "@expo/vector-icons";
 const Tab = createBottomTabNavigator();
 
